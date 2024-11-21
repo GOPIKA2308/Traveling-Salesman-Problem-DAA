@@ -1,0 +1,24 @@
+import itertools
+def calculate_distance(graph, path):
+distance = 0
+n = len(path)
+for i in range(n - 1):
+distance += graph[path[i]][path[i + 1]]
+distance += graph[path[-1]][path[0]] # return to start
+return distance
+def tsp_brute_force(graph):
+n = len(graph)
+min_path = []
+min_distance = float('inf')
+for perm in itertools.permutations(range(n)):
+current_distance = calculate_distance(graph, perm)
+if current_distance < min_distance:
+min_distance = current_distance
+min_path = perm
+return min_path, min_distance
+graph = [
+[0, 10, 15, 20], [10, 0, 35, 25], [15, 35, 0, 30], [20, 25, 30, 0]
+]
+path, distance = tsp_brute_force(graph)
+print("Shortest Hamiltonian Circuit:", path)
+print("Minimum Distance:", distance)
